@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventHub — Event Registration System</title>
+    <meta name="description" content="A simple and modern event registration system. Browse events, register in seconds, and view your registrations all in one place." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- SPA view switching: only the .active section is shown -->
+    <style>
+      .content-section { display: none; }
+      .content-section.active { display: flex; }
+    </style>
+  </head>
+  <body>
+
+    <!-- ─── Top Header ─────────────────────────────────────── -->
+    <header class="top-header">
+      <div class="header-brand">
+        <div class="header-logo" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="#2563eb"/>
+            <path d="M7 9h14M7 14h9M7 19h12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="21" cy="19" r="3" fill="#60a5fa"/>
+          </svg>
+        </div>
+        <span class="header-title">EventHub</span>
+      </div>
+      <p class="header-subtitle">Event Registration System</p>
+    </header>
+
+    <!-- ─── Dashboard Layout ───────────────────────────────── -->
+    <div class="dashboard">
+
+      <!-- ─── Sidebar ─────────────────────────────────────── -->
+      <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav" aria-label="Main navigation">
+          <ul>
+            <li>
+              <a href="#" class="nav-item" id="nav-register" data-view="section-register">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    <line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/>
+                  </svg>
+                </span>
+                <span class="nav-label">Register Event</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item" id="nav-events" data-view="section-events">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16M4 10h16M4 14h8M4 18h6"/>
+                    <rect x="14" y="12" width="8" height="8" rx="2"/>
+                  </svg>
+                </span>
+                <span class="nav-label">Event List</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item" id="nav-my-registrations" data-view="section-my-registrations">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                <span class="nav-label">My Registrations</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- ─── Main Content ────────────────────────────────── -->
+      <main class="main-content" id="main-content">
+
+        <!-- ─── View 1: Register Event ─────────────────────── -->
+        <section id="section-register" class="content-section">
+          <div class="section-header">
+            <h1 class="section-title">Register Event</h1>
+            <p class="section-desc">Fill in the details below to create a new event.</p>
+          </div>
+
+          <div class="form-card">
+            <form id="create-event-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="event-title">Event Title <span class="required">*</span></label>
+                  <input type="text" id="event-title" placeholder="e.g. Tech Conference 2026" required />
+                </div>
+                <div class="form-group">
+                  <label for="event-venue">Venue <span class="required">*</span></label>
+                  <input type="text" id="event-venue" placeholder="e.g. Pune, Maharashtra" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="event-description">Description <span class="required">*</span></label>
+                <textarea id="event-description" placeholder="What is this event about?" required></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="event-date">Date &amp; Time <span class="required">*</span></label>
+                  <input type="datetime-local" id="event-date" required />
+                </div>
+                <div class="form-group">
+                  <label for="event-capacity">Capacity <span class="required">*</span></label>
+                  <input type="number" id="event-capacity" placeholder="e.g. 100" min="1" required />
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" id="create-event-btn" class="btn btn-primary">
+                  <span class="btn-icon" aria-hidden="true">+</span>
+                  Create Event
+                </button>
+              </div>
+            </form>
+            <div id="create-event-message" class="form-message" role="alert" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <!-- ─── View 2: Event List ──────────────────────────── -->
+        <section id="section-events" class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Event List</h2>
+            <p class="section-desc">Browse all available events and register for one.</p>
+          </div>
+
+          <div id="events-container" role="list" aria-label="Available events">
+            <div class="loading-state">
+              <div class="loading-spinner" aria-hidden="true"></div>
+              <p>Loading events...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── View 3: Registration Form ──────────────────── -->
+        <section id="section-reg-form" class="content-section">
+          <div class="section-header">
+            <h2 id="reg-panel-title" class="section-title">Register for Event</h2>
+            <p class="section-desc">Enter your details to complete the registration.</p>
+          </div>
+
+          <div class="form-card">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-panel-name">Full Name <span class="required">*</span></label>
+                <input type="text" id="reg-panel-name" placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label for="reg-panel-email">Email <span class="required">*</span></label>
+                <input type="email" id="reg-panel-email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" id="reg-panel-submit-btn" class="btn btn-primary">Register</button>
+              <button type="button" id="reg-panel-cancel-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+            <div id="reg-panel-message" class="form-message" role="alert" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <!-- ─── View 4: My Registrations ───────────────────── -->
+        <section id="section-my-registrations" class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">My Registrations</h2>
+            <p class="section-desc">Enter your email to see all events you have registered for.</p>
+          </div>
+
+          <div class="form-card lookup-card">
+            <div class="lookup-row">
+              <div class="form-group lookup-input-group">
+                <label for="lookup-email">Your Email Address</label>
+                <input type="email" id="lookup-email" placeholder="you@example.com" />
+              </div>
+              <button type="button" id="view-registrations-btn" class="btn btn-primary lookup-btn">
+                View Registrations
+              </button>
+            </div>
+            <div id="lookup-message" class="form-message" role="alert" aria-live="polite"></div>
+          </div>
+
+          <div id="my-registrations-container" role="list" aria-label="My registrations"></div>
+        </section>
+
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
